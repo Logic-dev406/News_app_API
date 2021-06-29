@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 require('./db/mongoose');
 
+const categoryRouter = require('./routers/categories');
 const newsRouter = require('./routers/news');
 
 //middleware
@@ -12,6 +13,7 @@ app.use(cors());
 app.options('*', cors());
 app.use(bodyParser.json());
 app.use(morgan('tiny'));
+app.use('/api/categories', categoryRouter);
 app.use('/api/news', newsRouter);
 
 //port
