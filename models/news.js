@@ -20,6 +20,11 @@ const newsSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         require: true,
     },
+    catgory: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category',
+        require: true,
+    },
     datePosted: {
         type: Date,
         require: true,
