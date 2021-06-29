@@ -1,15 +1,11 @@
 const express = require('express');
+const { getNews, getNewsById } = require('../controllers/newsController');
 const router = express.Router();
 const News = require('../models/news');
 
-router.get('/', async (req, res) => {
-    const newsList = await News.find();
+//Get news
+router.get('/', getNews);
 
-    if (!newsList) {
-        res.status(500).json({ success: false });
-    }
-
-    res.send(newsList);
-});
+router.get('/', getNewsById);
 
 module.exports = router;
