@@ -4,7 +4,11 @@ const response = require('../helpers/response');
 class NewsContoller {
     static async getNews(req, res) {
         try {
-            const newsList = await News.find();
+            let filter = {};
+            if (req.query.categories) {
+                filter = { category: req.query.categories.split(', ') };
+            }
+            const newsList = await News.find(filter);
 
             if (!newsList) {
                 res.status(500).send(
