@@ -20,7 +20,7 @@ const {
 router.get('/', getListOfAllUsers);
 
 //Get user by id
-router.get('/me', getUserById);
+router.get('/:id', getUserById);
 
 //Update user information by id
 router.put('/update', updateUserById);
@@ -41,6 +41,6 @@ router.get('/get/count', getTotalAmountOfAllUsers);
 router.delete('/:id', deleteUserById);
 
 //Delete user by id
-router.delete('/:id', deleteMyAccount);
+router.delete('/me/:id', deleteMyAccount);
 
 module.exports = router;

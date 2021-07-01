@@ -9,7 +9,7 @@ const response = require('../helpers/response');
 
 class UsersController {
     static async getListOfAllUsers(req, res) {
-        const userList = await User.find().select('-passwordHash');
+        const userList = await User.find().select('-passwordHash ');
 
         if (!userList) {
             res.status(500).send(response('No user find', {}, false));
@@ -19,9 +19,7 @@ class UsersController {
     }
 
     static async getUserById(req, res) {
-        const user = await User.findById(req.user.userId).select(
-            '-passwordHash'
-        );
+        const user = await User.findById(req.params.id).select('-passwordHash');
 
         if (!user) {
             return res.status(500).send(response('user not found', {}, false));
@@ -32,17 +30,12 @@ class UsersController {
 
     static async createAdminUser(req, res) {
         try {
-            const userExist = User.findOne({ email: req.body.email });
+            const userExist = await User.findOne({ email: req.body.email });
+
             if (userExist) {
                 return res
-                    .status(409)
-                    .send(
-                        response(
-                            'User with the giving address already exist please change the email address',
-                            {},
-                            false
-                        )
-                    );
+                    .status(400)
+                    .send(response('email already exist', {}, false));
             }
 
             let user = new User({
