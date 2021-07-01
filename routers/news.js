@@ -48,7 +48,7 @@ router.get('/mynews', getUsersNews);
 router.delete('/:id', deleteNewsById);
 
 //Delete user news
-router.delete('/:id', deleteNewsById);
+router.delete('/me/:id', deleteNewsById);
 
 router.post('/', uploadOptions.single('image'), createNews);
 

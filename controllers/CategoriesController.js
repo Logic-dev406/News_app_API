@@ -44,6 +44,16 @@ class CategoriesController {
 
     static async createCategory(req, res) {
         try {
+            const categoryExist = await Category.findOne({
+                name: req.body.name,
+            });
+
+            if (categoryExist) {
+                return res
+                    .status(400)
+                    .send(response('Category already exist', {}, false));
+            }
+
             let category = new Category({
                 name: req.body.name,
             });
