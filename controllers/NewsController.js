@@ -102,28 +102,30 @@ class NewsContoller {
     }
 
     static async updateNewsById(req, res) {
-        if (!mongoose.isValidObjectId(req.body.autor)) {
-            res.status(400).send(response('Invalid news id', {}, false));
+        try {
+            if (!mongoose.isValidObjectId(req.params.id)) {
+                res.status(400).send(response('Invalid news id', {}, false));
+            }
+
+            const update = {
+                ...req.body,
+            };
+            const filter = { _id: req.params.id };
+            // console.log(update);
+
+            const news = await News.findOneAndUpdate(filter, update, {
+                new: true,
+            });
+
+            if (!news)
+                return res
+                    .status(500)
+                    .send(response('The news can not be updated', {}, false));
+
+            res.send(response('News was updated successfully', news));
+        } catch (err) {
+            console.log(err.message);
         }
-
-        const news = await News.findByIdAndUpdate(
-            req.body.autor,
-            {
-                title: req.body.title,
-                autor: req.body.autor,
-                body: req.body.body,
-                image: `${basePath}${fileName}`,
-                category: req.body.category,
-            },
-            { new: true }
-        );
-
-        if (!news)
-            return res
-                .status(500)
-                .send(response('The news can not be updated', {}, false));
-
-        res.send(response('News was updated successfully', news));
     }
 
     static deleteNewsById(req, res) {
