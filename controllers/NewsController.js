@@ -90,6 +90,24 @@ class NewsContoller {
             console.log(err);
         }
     }
+
+    static deleteNewsById(req, res) {
+        News.findByIdAndDelete(req.params.id)
+            .then((news) => {
+                if (news) {
+                    return res
+                        .status(200)
+                        .send(response('The product as been deleted', {}));
+                } else {
+                    return res
+                        .status(404)
+                        .send(response('Product not found', {}, false));
+                }
+            })
+            .catch((error) => {
+                return res.status(400).send(response(error.message, {}, false));
+            });
+    }
 }
 
 module.exports = NewsContoller;

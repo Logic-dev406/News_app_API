@@ -5,6 +5,7 @@ const {
     getNews,
     getNewsById,
     createNews,
+    getUsersNews,
 } = require('../controllers/newsController');
 
 const FILE_TYPE_MAP = {
@@ -35,7 +36,11 @@ const uploadOptions = multer({ storage: storage });
 //Get news
 router.get('/', getNews);
 
-router.get('/', getNewsById);
+//Get news by slug
+router.get('/:slug', getNewsById);
+
+//Get news created by a user
+router.get('/mynews', getUsersNews);
 
 router.post('/', uploadOptions.single('image'), createNews);
 
