@@ -103,7 +103,7 @@ class NewsContoller {
                 .send(response('Invalid Category', {}, false));
         }
 
-        const product = await Product.findByIdAndUpdate(
+        const news = await News.findByIdAndUpdate(
             req.params.id,
             {
                 title: req.body.title,
@@ -115,12 +115,12 @@ class NewsContoller {
             { new: true }
         );
 
-        if (!product)
+        if (!news)
             return res
                 .status(500)
                 .send(response('The news can not be updated', {}, false));
 
-        res.send(response('News was updated successfully', product));
+        res.send(response('News was updated successfully', news));
     }
 
     static deleteNewsById(req, res) {
