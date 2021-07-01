@@ -20,7 +20,7 @@ const newsSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         require: true,
     },
-    catgory: {
+    category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',
         require: true,

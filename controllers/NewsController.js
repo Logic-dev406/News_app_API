@@ -1,6 +1,7 @@
 const News = require('../models/news');
 const Category = require('../models/category');
 const response = require('../helpers/response');
+const mongoose = require('mongoose');
 
 class NewsContoller {
     static async getNews(req, res) {
@@ -67,6 +68,14 @@ class NewsContoller {
 
     static async createNews(req, res) {
         try {
+            if (
+                !mongoose.isValidObjectId(req.body.autor && req.body.category)
+            ) {
+                res.status(400).send(
+                    response('invalid user id or category id', {}, false)
+                );
+            }
+
             const fileName = req.file.filename;
             const basePath = `${req.protocol}://${req.get(
                 'host'
@@ -93,18 +102,12 @@ class NewsContoller {
     }
 
     static async updateNewsById(req, res) {
-        if (!mongoose.isValidObjectId(req.params.id)) {
+        if (!mongoose.isValidObjectId(req.body.autor)) {
             res.status(400).send(response('Invalid news id', {}, false));
-        }
-        const category = await Category.findById(req.body.category);
-        if (!category) {
-            return res
-                .status(400)
-                .send(response('Invalid Category', {}, false));
         }
 
         const news = await News.findByIdAndUpdate(
-            req.params.id,
+            req.body.autor,
             {
                 title: req.body.title,
                 autor: req.body.autor,
