@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const slug = require('mongoose-slug-generator');
+
+mongoose.plugin(slug);
 
 const newsSchema = mongoose.Schema({
     title: {
@@ -30,6 +33,7 @@ const newsSchema = mongoose.Schema({
         require: true,
         default: Date.now,
     },
+    slug: { type: String, slug: 'title' },
 });
 
 const news = mongoose.model('News', newsSchema);

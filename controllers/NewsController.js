@@ -26,15 +26,11 @@ class NewsContoller {
 
     static async getNewsById(req, res) {
         try {
-            const news = await News.findById(res.params.id);
+            const news = await News.findOne({ slug: req.params.slug });
 
             if (!news) {
                 res.status(500).send(
-                    response(
-                        'Category with the given ID was not found',
-                        {},
-                        false
-                    )
+                    response('News with the given ID was not found', {}, false)
                 );
             }
 
@@ -111,7 +107,6 @@ class NewsContoller {
                 ...req.body,
             };
             const filter = { _id: req.params.id };
-            // console.log(update);
 
             const news = await News.findOneAndUpdate(filter, update, {
                 new: true,
@@ -129,30 +124,6 @@ class NewsContoller {
     }
 
     static deleteNewsById(req, res) {
-        News.findByIdAndDelete(req.params.id)
-            .then((news) => {
-                if (news) {
-                    return res
-                        .status(200)
-                        .send(response('News was deleted successfully', {}));
-                } else {
-                    return res
-                        .status(404)
-                        .send(
-                            response(
-                                'News with the giving id was not found',
-                                {},
-                                false
-                            )
-                        );
-                }
-            })
-            .catch((error) => {
-                return res.status(400).send(response(error.message, {}, false));
-            });
-    }
-
-    static deleteUserNews(req, res) {
         News.findByIdAndDelete(req.params.id)
             .then((news) => {
                 if (news) {

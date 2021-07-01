@@ -51,9 +51,6 @@ router.put('/:id', updateNewsById);
 //Delete news by id
 router.delete('/:id', deleteNewsById);
 
-//Delete user news
-router.delete('/me/:id', deleteUserNews);
-
 router.post('/', uploadOptions.single('image'), createNews);
 
 module.exports = router;
