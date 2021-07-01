@@ -42,6 +42,28 @@ class NewsContoller {
         }
     }
 
+    static async getUsersNews(req, res) {
+        try {
+            const news = await News.findOne({ autor: req.params.id });
+
+            if (!news) {
+                res.status(500).send(
+                    response(
+                        'News with the given userID was not found',
+                        {},
+                        false
+                    )
+                );
+            }
+
+            res.status(200).send(
+                response('Fetched user news successfully', news)
+            );
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     static async createNews(req, res) {
         try {
             const fileName = req.file.filename;
