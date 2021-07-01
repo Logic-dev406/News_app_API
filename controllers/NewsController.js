@@ -10,7 +10,7 @@ class NewsContoller {
             if (req.query.categories) {
                 filter = { category: req.query.categories.split(', ') };
             }
-            const newsList = await News.find(filter);
+            const newsList = await News.find(filter).sort({ dateOdered: -1 });
 
             if (!newsList) {
                 res.status(500).send(
@@ -42,7 +42,9 @@ class NewsContoller {
 
     static async getUsersNews(req, res) {
         try {
-            const news = await News.findOne({ autor: req.params.id });
+            const news = await News.find({ autor: req.params.id }).sort({
+                dateOdered: -1,
+            });
 
             if (!news) {
                 res.status(500).send(

@@ -43,7 +43,7 @@ router.get('/', getNews);
 router.get('/:slug', getNewsById);
 
 //Get news created by a user
-router.get('/mynews', getUsersNews);
+router.get('/mynews/:id', getUsersNews);
 
 //Update my news
 router.put('/:id', updateNewsById);
@@ -51,6 +51,7 @@ router.put('/:id', updateNewsById);
 //Delete news by id
 router.delete('/:id', deleteNewsById);
 
+//Create news
 router.post('/', uploadOptions.single('image'), createNews);
 
 module.exports = router;
