@@ -1,4 +1,5 @@
 const News = require('../models/news');
+const Category = require('../models/category');
 const response = require('../helpers/response');
 
 class NewsContoller {
@@ -91,17 +92,48 @@ class NewsContoller {
         }
     }
 
+    static async updateNewsById(req, res) {
+        if (!mongoose.isValidObjectId(req.params.id)) {
+            res.status(400).send(response('Invalid news id', {}, false));
+        }
+        const category = await Category.findById(req.body.category);
+        if (!category) {
+            return res
+                .status(400)
+                .send(response('Invalid Category', {}, false));
+        }
+
+        const product = await Product.findByIdAndUpdate(
+            req.params.id,
+            {
+                title: req.body.title,
+                autor: req.body.autor,
+                body: req.body.body,
+                image: `${basePath}${fileName}`,
+                category: req.body.category,
+            },
+            { new: true }
+        );
+
+        if (!product)
+            return res
+                .status(500)
+                .send(response('The news can not be updated', {}, false));
+
+        res.send(response('News was updated successfully', product));
+    }
+
     static deleteNewsById(req, res) {
         News.findByIdAndDelete(req.params.id)
             .then((news) => {
                 if (news) {
                     return res
                         .status(200)
-                        .send(response('The product as been deleted', {}));
+                        .send(response('The news as been deleted', {}));
                 } else {
                     return res
                         .status(404)
-                        .send(response('Product not found', {}, false));
+                        .send(response('News not found', {}, false));
                 }
             })
             .catch((error) => {
@@ -115,11 +147,11 @@ class NewsContoller {
                 if (news) {
                     return res
                         .status(200)
-                        .send(response('The product as been deleted', {}));
+                        .send(response('The news as been deleted', {}));
                 } else {
                     return res
                         .status(404)
-                        .send(response('Product not found', {}, false));
+                        .send(response('News not found', {}, false));
                 }
             })
             .catch((error) => {
