@@ -32,6 +32,19 @@ class UsersController {
 
     static async createAdminUser(req, res) {
         try {
+            const userExist = User.findOne({ email: req.body.email });
+            if (userExist) {
+                return res
+                    .status(409)
+                    .send(
+                        response(
+                            'User with the giving address already exist please change the email address',
+                            {},
+                            false
+                        )
+                    );
+            }
+
             let user = new User({
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
@@ -39,11 +52,6 @@ class UsersController {
                 passwordHash: bcrypt.hashSync(req.body.password, 10),
                 phone: req.body.phone,
                 role: req.body.role,
-                street: req.body.street,
-                lga: req.body.lga,
-                direction: req.body.direction,
-                city: req.body.city,
-                state: req.body.state,
             });
             user = await user.save();
 
@@ -133,11 +141,6 @@ class UsersController {
                 email: req.body.email,
                 passwordHash: bcrypt.hashSync(req.body.password, 10),
                 phone: req.body.phone,
-                street: req.body.street,
-                lga: req.body.lga,
-                direction: req.body.direction,
-                city: req.body.city,
-                state: req.body.state,
             });
             user = await user.save();
 
@@ -175,6 +178,24 @@ class UsersController {
                     return res
                         .status(404)
                         .send(response('User not found', {}, false));
+                }
+            })
+            .catch((error) => {
+                return res.status(400).send(response(error.message, {}, false));
+            });
+    }
+
+    static deleteMyAccount(req, res) {
+        User.findByIdAndDelete(req.params.id)
+            .then((user) => {
+                if (user) {
+                    return res
+                        .status(200)
+                        .send(response('Account was successful deleted ', {}));
+                } else {
+                    return res
+                        .status(404)
+                        .send(response('Account not found', {}, false));
                 }
             })
             .catch((error) => {

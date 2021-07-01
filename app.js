@@ -6,6 +6,7 @@ const cors = require('cors');
 require('./db/mongoose');
 
 const categoryRouter = require('./routers/categories');
+const userRouter = require('./routers/users');
 const newsRouter = require('./routers/news');
 
 //middleware
@@ -15,6 +16,7 @@ app.use(bodyParser.json());
 app.use(morgan('tiny'));
 app.use('/api/categories', categoryRouter);
 app.use('/api/news', newsRouter);
+app.use('/api/users', userRouter);
 
 //port
 const port = process.env.PORT || 3000;
