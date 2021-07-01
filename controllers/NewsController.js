@@ -129,11 +129,17 @@ class NewsContoller {
                 if (news) {
                     return res
                         .status(200)
-                        .send(response('The news as been deleted', {}));
+                        .send(response('News was deleted successfully', {}));
                 } else {
                     return res
                         .status(404)
-                        .send(response('News not found', {}, false));
+                        .send(
+                            response(
+                                'News with the giving id was not found',
+                                {},
+                                false
+                            )
+                        );
                 }
             })
             .catch((error) => {
@@ -147,11 +153,17 @@ class NewsContoller {
                 if (news) {
                     return res
                         .status(200)
-                        .send(response('The news as been deleted', {}));
+                        .send(response('News was deleted successfully', {}));
                 } else {
                     return res
                         .status(404)
-                        .send(response('News not found', {}, false));
+                        .send(
+                            response(
+                                'News with the giving id was not found',
+                                {},
+                                false
+                            )
+                        );
                 }
             })
             .catch((error) => {
