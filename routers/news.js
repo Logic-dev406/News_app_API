@@ -6,6 +6,8 @@ const {
     getNewsById,
     createNews,
     getUsersNews,
+    deleteNewsById,
+    deleteUserNews,
 } = require('../controllers/newsController');
 
 const FILE_TYPE_MAP = {
@@ -41,6 +43,12 @@ router.get('/:slug', getNewsById);
 
 //Get news created by a user
 router.get('/mynews', getUsersNews);
+
+//Delete news by id
+router.delete('/:id', deleteNewsById);
+
+//Delete user news
+router.delete('/:id', deleteNewsById);
 
 router.post('/', uploadOptions.single('image'), createNews);
 
