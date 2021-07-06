@@ -27,7 +27,7 @@ class NewsContoller {
     static async getNewsById(req, res) {
         try {
             if (!mongoose.isValidObjectId(req.params.slug)) {
-                res.status(400).send(response('Invalid Category', {}, false));
+                res.status(400).send(response('Invalid news id', {}, false));
             }
 
             const news = await News.findOne({ slug: req.params.slug })

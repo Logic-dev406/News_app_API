@@ -6,6 +6,10 @@ const User = require('../models/user');
 class CommentsController {
     static async createComment(req, res) {
         try {
+            if (!mongoose.isValidObjectId(req.params.id)) {
+                res.status(400).send(response('Invalid news id', {}, false));
+            }
+
             // find out which post you are commenting
             const id = req.params.id;
 
