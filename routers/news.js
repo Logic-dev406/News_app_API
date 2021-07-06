@@ -7,8 +7,8 @@ const {
     createNews,
     getUsersNews,
     deleteNewsById,
-    deleteUserNews,
     updateNewsById,
+    filterNewsByCategory,
 } = require('../controllers/newsController');
 const news = require('../models/news');
 
@@ -51,6 +51,9 @@ router.put('/:id', updateNewsById);
 
 //Delete news by id
 router.delete('/:id', deleteNewsById);
+
+//Get news by category
+router.get('/filter/:category', filterNewsByCategory);
 
 //Create news
 router.post('/', uploadOptions.single('image'), createNews);

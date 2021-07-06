@@ -26,11 +26,41 @@ class NewsContoller {
 
     static async getNewsById(req, res) {
         try {
-            const news = await News.findOne({ slug: req.params.slug });
+            if (!mongoose.isValidObjectId(req.params.slug)) {
+                res.status(400).send(response('Invalid Category', {}, false));
+            }
+
+            const news = await News.findOne({ slug: req.params.slug })
+                .populate({ path: 'category', model: 'Category' })
+                .populate({ path: 'autor', model: 'User' });
 
             if (!news) {
                 res.status(500).send(
                     response('News with the given ID was not found', {}, false)
+                );
+            }
+
+            res.status(200).send(response('Fetched news successfully', news));
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    static async filterNewsByCategory(req, res) {
+        try {
+            if (!mongoose.isValidObjectId(req.params.category)) {
+                res.status(400).send(response('Invalid Category', {}, false));
+            }
+
+            const news = await News.find({ category: req.params.category });
+
+            if (!news) {
+                res.status(500).send(
+                    response(
+                        'News with the given category was not found',
+                        {},
+                        false
+                    )
                 );
             }
 

@@ -21,6 +21,7 @@ const newsSchema = mongoose.Schema({
     },
     autor: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         require: true,
     },
     category: {
