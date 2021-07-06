@@ -7,7 +7,9 @@ class CategoriesController {
             const categoryList = await Category.find();
 
             if (!categoryList) {
-                res.status(500).send(response('Category not found', {}, false));
+                return res
+                    .status(500)
+                    .send(response('Category not found', {}, false));
             }
 
             res.status(200).send(

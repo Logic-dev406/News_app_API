@@ -28,6 +28,12 @@ const newsSchema = mongoose.Schema({
         ref: 'Category',
         require: true,
     },
+    comments: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Comment',
+        },
+    ],
     datePosted: {
         type: Date,
         require: true,

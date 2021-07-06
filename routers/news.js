@@ -10,6 +10,7 @@ const {
     deleteUserNews,
     updateNewsById,
 } = require('../controllers/newsController');
+const news = require('../models/news');
 
 const FILE_TYPE_MAP = {
     'image/png': 'png',
