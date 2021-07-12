@@ -53,7 +53,7 @@ router.put('/:id', updateNewsById);
 router.delete('/:id', deleteNewsById);
 
 //Get news by category
-router.get('/filter/:category', filterNewsByCategory);
+// router.get('/filter/:category', filterNewsByCategory);
 
 //Create news
 router.post('/', uploadOptions.single('image'), createNews);

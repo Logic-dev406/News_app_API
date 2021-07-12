@@ -10,7 +10,10 @@ class NewsContoller {
             if (req.query.categories) {
                 filter = { category: req.query.categories.split(', ') };
             }
-            const newsList = await News.find(filter).sort({ dateOdered: -1 });
+            console.log(filter);
+            const newsList = await News.find(filter)
+                .sort({ dateOdered: -1 })
+                .populate({ path: 'category', model: 'Category' });
 
             if (!newsList) {
                 res.status(500).send(
@@ -26,10 +29,6 @@ class NewsContoller {
 
     static async getNewsById(req, res) {
         try {
-            if (!mongoose.isValidObjectId(req.params.slug)) {
-                res.status(400).send(response('Invalid news id', {}, false));
-            }
-
             const news = await News.findOne({ slug: req.params.slug })
                 .populate({ path: 'category', model: 'Category' })
                 .populate({ path: 'autor', model: 'User' });
@@ -46,29 +45,29 @@ class NewsContoller {
         }
     }
 
-    static async filterNewsByCategory(req, res) {
-        try {
-            if (!mongoose.isValidObjectId(req.params.category)) {
-                res.status(400).send(response('Invalid Category', {}, false));
-            }
+    // static async filterNewsByCategory(req, res) {
+    //     try {
+    //         if (!mongoose.isValidObjectId(req.params.category)) {
+    //             res.status(400).send(response('Invalid Category', {}, false));
+    //         }
 
-            const news = await News.find({ category: req.params.category });
+    //         const news = await News.find({ category: req.params.category });
 
-            if (!news) {
-                res.status(500).send(
-                    response(
-                        'News with the given category was not found',
-                        {},
-                        false
-                    )
-                );
-            }
+    //         if (!news) {
+    //             res.status(500).send(
+    //                 response(
+    //                     'News with the given category was not found',
+    //                     {},
+    //                     false
+    //                 )
+    //             );
+    //         }
 
-            res.status(200).send(response('Fetched news successfully', news));
-        } catch (err) {
-            console.log(err);
-        }
-    }
+    //         res.status(200).send(response('Fetched news successfully', news));
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    // }
 
     static async getUsersNews(req, res) {
         try {
