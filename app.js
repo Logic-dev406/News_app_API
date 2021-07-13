@@ -20,6 +20,10 @@ app.use('/api/news', newsRouter);
 app.use('/api/users', userRouter);
 app.use('/api/comment', commentRouter);
 
+app.get('/', (req, res) => {
+    res.send('WELCOM TO NEWS API');
+});
+
 //port
 const port = process.env.PORT || 3000;
 
