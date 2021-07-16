@@ -76,13 +76,14 @@ class CategoriesController {
 
     static async updateCategoryById(req, res) {
         try {
-            const category = await Category.findByIdAndUpdate(
-                req.params.id,
-                {
-                    name: req.body.name,
-                },
-                { new: true }
-            );
+            const update = {
+                ...req.body,
+            };
+            const filter = { _id: req.params.id };
+
+            const category = await Category.findOneAndUpdate(filter, update, {
+                new: true,
+            });
 
             if (!category)
                 return res
