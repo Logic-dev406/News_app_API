@@ -19,6 +19,7 @@ app.use('/api/categories', categoryRouter);
 app.use('/api/news', newsRouter);
 app.use('/api/users', userRouter);
 app.use('/api/comment', commentRouter);
+app.use('/public/uploads', express.static(__dirname + '/public/uploads'));
 
 app.get('/', (req, res) => {
     res.send('WELCOM TO NEWS API');
