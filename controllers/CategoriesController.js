@@ -20,7 +20,7 @@ class CategoriesController {
         }
     }
 
-    static async getCategoryById(req, res) {
+    static async getCategoryBySlug(req, res) {
         try {
             const category = await Category.findOne({ slug: req.params.slug });
 

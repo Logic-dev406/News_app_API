@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {
     getCategories,
-    getCategoryById,
+    getCategoryBySlug,
     createCategory,
     updateCategoryById,
     deleteCategoryById,
@@ -13,7 +13,7 @@ const {
 router.get('/', getCategories);
 
 //Get category by slug
-router.get('/:slug', getCategoryById);
+router.get('/:slug', getCategoryBySlug);
 
 //Create category
 router.post('/', createCategory);
