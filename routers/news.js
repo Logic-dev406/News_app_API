@@ -9,7 +9,7 @@ const {
     deleteNewsById,
     updateNewsById,
     filterNewsByCategory,
-} = require('../controllers/newsController');
+} = require('../controllers/NewsController');
 const news = require('../models/news');
 
 const FILE_TYPE_MAP = {
