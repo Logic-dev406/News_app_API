@@ -22,7 +22,7 @@ class CategoriesController {
 
     static async getCategoryById(req, res) {
         try {
-            const category = await Category.findById(req.params.id);
+            const category = await Category.findOne({ slug: req.params.slug });
 
             if (!category) {
                 return res

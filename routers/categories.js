@@ -12,8 +12,8 @@ const {
 //Get all categories
 router.get('/', getCategories);
 
-//Get category by id
-router.get('/:id', getCategoryById);
+//Get category by slug
+router.get('/:slug', getCategoryById);
 
 //Create category
 router.post('/', createCategory);
