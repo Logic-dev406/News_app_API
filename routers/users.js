@@ -23,7 +23,7 @@ router.get('/', getListOfAllUsers);
 router.get('/:id', getUserById);
 
 //Update user information by id
-router.put('/update', updateUserById);
+router.put('/:id', updateUserById);
 
 //Create user by admin
 router.post('/', createAdminUser);

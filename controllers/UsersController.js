@@ -60,14 +60,14 @@ class UsersController {
     }
 
     static async updateUserById(req, res) {
-        if (!mongoose.isValidObjectId(req.user.userId)) {
+        if (!mongoose.isValidObjectId(req.params.id)) {
             res.status(400).send(response('invalid User id', {}, false));
         }
 
         const update = {
             ...req.body,
         };
-        const filter = { _id: req.user.userId };
+        const filter = { _id: req.params.id };
 
         try {
             const user = await User.findOneAndUpdate(filter, update, {
