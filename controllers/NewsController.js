@@ -10,7 +10,6 @@ class NewsContoller {
             if (req.query.categories) {
                 filter = { category: req.query.categories.split(', ') };
             }
-            console.log(filter);
             const newsList = await News.find(filter)
                 .sort({ dateOdered: -1 })
                 .populate({ path: 'category', model: 'Category' });
