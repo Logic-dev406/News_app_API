@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const {
-    getListOfAllUsers,
+    getListOfActiveUsers,
+    getListOfNonActiveUsers,
     getUserById,
     createAdminUser,
     loginUser,
@@ -18,7 +19,10 @@ const {
 //Integrate sendgrid email service
 
 //Get list of all users
-router.get('/', getListOfAllUsers);
+router.get('/active-users', getListOfActiveUsers);
+
+//Get list of all users
+router.get('/non-active-users', getListOfNonActiveUsers);
 
 //Get user by id
 router.get('/:id', getUserById);
