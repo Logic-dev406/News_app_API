@@ -16,15 +16,17 @@ class WalletController {
         res.send(response('Fetched wallet successfully', wallet));
     }
 
-    // static async getUserById(req, res) {
-    //     const user = await User.findById(req.params.id).select('-passwordHash');
+    static async sendToken(req, res) {
+        const user = await User.findOne({ email: req.params.email }).select(
+            '-passwordHash'
+        );
 
-    //     if (!user) {
-    //         return res.status(500).send(response('user not found', {}, false));
-    //     }
+        if (!user) {
+            return res.status(500).send(response('user not found', {}, false));
+        }
 
-    //     res.status(200).send(response('Fetched users successfully', user));
-    // }
+        res.status(200).send(response('Fetched users successfully', user));
+    }
 
     // static async createAdminUser(req, res) {
     //     try {

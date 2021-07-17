@@ -1,6 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const { getUserWallet } = require('../controllers/WalletControllers');
+const {
+    getUserWallet,
+    sendToken,
+} = require('../controllers/WalletControllers');
 
 //Get user wallet by id
-router.get('/', getUserWallet);
+router.get('/:id', getUserWallet);
+
+//Receive token
+router.post('/:email', sendToken);
+
+module.exports = router;
