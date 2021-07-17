@@ -31,6 +31,10 @@ const userSchema = mongoose.Schema({
         type: String,
         default: 'basic',
     },
+    status: {
+        type: String,
+        default: 'active',
+    },
 });
 
 userSchema.virtual('id').get(function () {
