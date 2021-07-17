@@ -55,6 +55,13 @@ class UsersController {
                     .send(response('The user can not be created', {}, false));
 
             res.send(response('User was created successfully', user));
+
+            const userId = await user._id;
+
+            let wallet = new Wallet({
+                user: userId,
+            });
+            wallet = await wallet.save();
         } catch (error) {
             res.send(response(error.message, {}, false));
         }
@@ -115,8 +122,6 @@ class UsersController {
         } else {
             res.status(400).send(response('password is wrong!', {}, false));
         }
-
-        // return res.status(200).send(response("",user));
     }
 
     static async registerNewUser(req, res) {
@@ -151,7 +156,6 @@ class UsersController {
                 user: userId,
             });
             wallet = await wallet.save();
-            console.log(wallet);
         } catch (error) {
             res.send(response(error.message, {}, false));
         }
