@@ -201,40 +201,33 @@ class UsersController {
         res.send(response('Users count successful', userCount));
     }
 
-    static deleteUserById(req, res) {
-        User.findByIdAndDelete(req.params.id)
-            .then((user) => {
-                if (user) {
-                    return res
-                        .status(200)
-                        .send(response('User was successful deleted ', {}));
-                } else {
-                    return res
-                        .status(404)
-                        .send(response('User not found', {}, false));
-                }
-            })
-            .catch((error) => {
-                return res.status(400).send(response(error.message, {}, false));
-            });
-    }
+    static async deleteUserById(req, res) {
+        if (!mongoose.isValidObjectId(req.params.id)) {
+            res.status(400).send(response('invalid User id', {}, false));
+        }
 
-    static deleteMyAccount(req, res) {
-        User.findByIdAndDelete(req.params.id)
-            .then((user) => {
-                if (user) {
-                    return res
-                        .status(200)
-                        .send(response('Account was successful deleted ', {}));
-                } else {
-                    return res
-                        .status(404)
-                        .send(response('Account not found', {}, false));
-                }
-            })
-            .catch((error) => {
-                return res.status(400).send(response(error.message, {}, false));
-            });
+        const update = {
+            status: 'not-active',
+        };
+        const filter = { _id: req.params.id };
+
+        try {
+            const user = await User.findOneAndUpdate(filter, update, {
+                new: true,
+            }).select('-passwordHash');
+
+            if (!user)
+                return res
+                    .status(500)
+                    .send(response('User not found', {}, false));
+
+            return res
+                .status(200)
+                .send(response('User was successfullly deleted', {}));
+        } catch (error) {
+            res.status(409).send(response(error.message, {}, false));
+            console.log(error.message);
+        }
     }
 
     static deleteAllAccount(req, res) {

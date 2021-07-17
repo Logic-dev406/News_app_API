@@ -10,7 +10,6 @@ const {
     getTotalAmountOfAllUsers,
     deleteUserById,
     updateUserById,
-    deleteMyAccount,
     deleteAllAccount,
 } = require('../controllers/UsersController');
 // const { authUser, isAdmin } = require('../helpers/jwt');
@@ -18,10 +17,10 @@ const {
 //TODO
 //Integrate sendgrid email service
 
-//Get list of all users
+//Get list of active users
 router.get('/active-users', getListOfActiveUsers);
 
-//Get list of all users
+//Get list of non active users
 router.get('/non-active-users', getListOfNonActiveUsers);
 
 //Get user by id
@@ -44,9 +43,6 @@ router.get('/get/count', getTotalAmountOfAllUsers);
 
 //Delete user by id
 router.delete('/:id', deleteUserById);
-
-//Delete user by id
-router.delete('/me/:id', deleteMyAccount);
 
 //Delete all accounts
 router.delete('/', deleteAllAccount);
