@@ -59,6 +59,13 @@ class UsersController {
             res.send(response('User was created successfully', user));
 
             const userId = await user._id;
+            const walletExist = await Wallet.findOne({ user: userId });
+
+            if (walletExist) {
+                return res
+                    .status(400)
+                    .send(response('Wallet already exist', {}, false));
+            }
 
             let wallet = new Wallet({
                 user: userId,
