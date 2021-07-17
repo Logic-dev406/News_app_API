@@ -1,7 +1,4 @@
 const User = require('../models/user');
-const { json } = require('body-parser');
-const bcrypt = require('bcryptjs');
-const { secret } = require('../config/config');
 const jwt = require('jsonwebtoken');
 const { token } = require('morgan');
 const mongoose = require('mongoose');
@@ -10,13 +7,13 @@ const Wallet = require('../models/wallet');
 
 class WalletController {
     static async getUserWallet(req, res) {
-        const wallet = await Wallet.find();
+        const wallet = await Wallet.findOne({ user: req.params.id });
 
         if (!wallet) {
             res.status(500).send(response('No wallet find', {}, false));
         }
 
-        res.send(response('Fetched users successfully', wallet));
+        res.send(response('Fetched wallet successfully', wallet));
     }
 
     // static async getUserById(req, res) {
