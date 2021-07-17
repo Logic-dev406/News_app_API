@@ -10,6 +10,7 @@ const {
     deleteUserById,
     updateUserById,
     deleteMyAccount,
+    deleteAllAccount,
 } = require('../controllers/UsersController');
 // const { authUser, isAdmin } = require('../helpers/jwt');
 
@@ -42,5 +43,8 @@ router.delete('/:id', deleteUserById);
 
 //Delete user by id
 router.delete('/me/:id', deleteMyAccount);
+
+//Delete all accounts
+router.delete('/', deleteAllAccount);
 
 module.exports = router;

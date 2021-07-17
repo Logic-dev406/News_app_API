@@ -224,6 +224,26 @@ class UsersController {
                 return res.status(400).send(response(error.message, {}, false));
             });
     }
+
+    static deleteAllAccount(req, res) {
+        User.deleteMany()
+            .then((user) => {
+                if (user) {
+                    return res
+                        .status(200)
+                        .send(
+                            response('All Account was successful deleted ', {})
+                        );
+                } else {
+                    return res
+                        .status(404)
+                        .send(response('Accounts not found', {}, false));
+                }
+            })
+            .catch((error) => {
+                return res.status(400).send(response(error.message, {}, false));
+            });
+    }
 }
 
 module.exports = UsersController;
