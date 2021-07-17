@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 require('mongoose-double')(mongoose);
 
+const SchemaTypes = mongoose.Schema.Types;
 const walletSchema = mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -9,17 +10,17 @@ const walletSchema = mongoose.Schema({
     },
     ledger_balance: {
         type: SchemaTypes.Double,
-        default: 0.0,
+        default: 0,
         require: true,
     },
     available_balance: {
         type: SchemaTypes.Double,
-        default: 0.0,
+        default: 0,
         require: true,
     },
     total_balance: {
         type: SchemaTypes.Double,
-        default: 0.0,
+        default: 0,
         require: true,
     },
 });

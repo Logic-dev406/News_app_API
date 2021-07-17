@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const { token } = require('morgan');
 const mongoose = require('mongoose');
 const response = require('../helpers/response');
+const Wallet = require('../models/wallet');
 
 class UsersController {
     static async getListOfAllUsers(req, res) {
@@ -143,6 +144,14 @@ class UsersController {
                     .send(response('The user can not be created', {}, false));
 
             res.send(response('User created successfully', user));
+
+            const userId = await user._id;
+
+            let wallet = new Wallet({
+                user: userId,
+            });
+            wallet = await wallet.save();
+            console.log(wallet);
         } catch (error) {
             res.send(response(error.message, {}, false));
         }
