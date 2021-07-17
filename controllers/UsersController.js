@@ -10,7 +10,9 @@ const Wallet = require('../models/wallet');
 
 class UsersController {
     static async getListOfAllUsers(req, res) {
-        const userList = await User.find().select('-passwordHash ');
+        const userList = await User.find({ status: 'active' }).select(
+            '-passwordHash '
+        );
 
         if (!userList) {
             res.status(500).send(response('No user find', {}, false));
