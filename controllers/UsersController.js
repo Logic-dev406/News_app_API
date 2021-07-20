@@ -70,19 +70,19 @@ class UsersController {
 
             res.send(response('User was created successfully', user));
 
-            const userId = await user._id;
-            const walletExist = await Wallet.findOne({ user: userId });
+            // const userId = await user._id;
+            // const walletExist = await Wallet.findOne({ user: userId });
 
-            if (walletExist) {
-                return res
-                    .status(400)
-                    .send(response('Wallet already exist', {}, false));
-            }
+            // if (walletExist) {
+            //     return res
+            //         .status(400)
+            //         .send(response('Wallet already exist', {}, false));
+            // }
 
-            let wallet = new Wallet({
-                user: userId,
-            });
-            wallet = await wallet.save();
+            // let wallet = new Wallet({
+            //     user: userId,
+            // });
+            // wallet = await wallet.save();
         } catch (error) {
             res.send(response(error.message, {}, false));
         }
@@ -171,19 +171,19 @@ class UsersController {
 
             res.send(response('User created successfully', user));
 
-            const userId = await user._id;
-            const walletExist = await Wallet.findOne({ user: userId });
+            // const userId = await user._id;
+            // const walletExist = await Wallet.findOne({ user: userId });
 
-            if (walletExist) {
-                return res
-                    .status(400)
-                    .send(response('Wallet already exist', {}, false));
-            }
+            // if (walletExist) {
+            //     return res
+            //         .status(400)
+            //         .send(response('Wallet already exist', {}, false));
+            // }
 
-            let wallet = new Wallet({
-                user: userId,
-            });
-            wallet = await wallet.save();
+            // let wallet = new Wallet({
+            //     user: userId,
+            // });
+            // wallet = await wallet.save();
         } catch (error) {
             res.send(response(error.message, {}, false));
         }

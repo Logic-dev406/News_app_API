@@ -7,17 +7,22 @@ const Wallet = require('../models/wallet');
 
 class WalletController {
     static async getUserWallet(req, res) {
-        const wallet = await Wallet.findOne({ user: req.params.id });
+        try {
+            // const user = await User.findById(req.params.id);
+            const wallet = await Wallet.findById(req.params.id);
 
-        if (!wallet) {
-            res.status(500).send(response('No wallet find', {}, false));
+            if (!wallet) {
+                res.status(500).send(response('No wallet find', {}, false));
+            }
+
+            res.send(response('Fetched wallet successfully', wallet));
+        } catch (err) {
+            console.log(err.message);
         }
-
-        res.send(response('Fetched wallet successfully', wallet));
     }
 
     static async sendToken(req, res) {
-        const user = await User.findOne({ email: req.params.email }).select(
+        const user = await User.findById(req.params.email).select(
             '-passwordHash'
         );
 
