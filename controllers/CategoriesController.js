@@ -56,8 +56,13 @@ class CategoriesController {
                     .send(response('Category already exist', {}, false));
             }
 
+            const fileName = req.file.filename;
+            const basePath = `${req.protocol}://${req.get(
+                'host'
+            )}/public/uploads/`;
             let category = new Category({
                 name: req.body.name,
+                image: `${basePath}${fileName}`,
             });
             category = await category.save();
 

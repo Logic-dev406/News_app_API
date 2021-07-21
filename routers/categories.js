@@ -42,7 +42,7 @@ router.get('/', getCategories);
 router.get('/:slug', getCategoryBySlug);
 
 //Create category
-router.post('/', createCategory);
+router.post('/', uploadOptions.single('image'), createCategory);
 
 //Update category by id
 router.put('/:id', updateCategoryById);
