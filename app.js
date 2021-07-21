@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
 require('./db/mongoose');
-const RateLimiterRedis = require('rate-limiter-flexible');
 
 const categoryRouter = require('./routers/categories');
 const userRouter = require('./routers/users');
