@@ -7,6 +7,7 @@ const {
     createCategory,
     updateCategoryById,
     deleteCategoryById,
+    updateCategoryImageById,
 } = require('../controllers/CategoriesController');
 
 const FILE_TYPE_MAP = {
@@ -45,7 +46,14 @@ router.get('/:slug', getCategoryBySlug);
 router.post('/', uploadOptions.single('image'), createCategory);
 
 //Update category by id
-router.put('/:id', uploadOptions.single('image'), updateCategoryById);
+router.put('/:id', updateCategoryById);
+
+//Update category image by id
+router.put(
+    '/image/:id',
+    uploadOptions.single('image'),
+    updateCategoryImageById
+);
 
 //Delete category by id
 router.delete('/:id', deleteCategoryById);
