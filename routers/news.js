@@ -50,7 +50,7 @@ router.get('/mynews/:id', getUsersNews);
 router.put('/:id', updateNewsById);
 
 //Update news image buy id
-router.put('/image/:id', updateNewsImageById);
+router.put('/image/:id', uploadOptions.single('image'), updateNewsImageById);
 
 //Delete news by id
 router.delete('/:id', deleteNewsById);
