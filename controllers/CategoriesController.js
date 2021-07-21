@@ -103,6 +103,34 @@ class CategoriesController {
         }
     }
 
+    static async updateCategoryImageById(req, res) {
+        try {
+            const fileName = req.file.filename;
+            const basePath = `${req.protocol}://${req.get(
+                'host'
+            )}/public/uploads/`;
+            const update = {
+                image: `${basePath}${fileName}`,
+            };
+            const filter = { _id: req.params.id };
+
+            const category = await Category.findOneAndUpdate(filter, update, {
+                new: true,
+            });
+
+            if (!category)
+                return res
+                    .status(404)
+                    .send(
+                        response('The category can not be updated', {}, false)
+                    );
+
+            res.send(response('Category was successfully updated', category));
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+
     static deleteCategoryById(req, res) {
         Category.findByIdAndDelete(req.params.id)
             .then((category) => {

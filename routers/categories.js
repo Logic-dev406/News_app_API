@@ -45,7 +45,7 @@ router.get('/:slug', getCategoryBySlug);
 router.post('/', uploadOptions.single('image'), createCategory);
 
 //Update category by id
-router.put('/:id', updateCategoryById);
+router.put('/:id', uploadOptions.single('image'), updateCategoryById);
 
 //Delete category by id
 router.delete('/:id', deleteCategoryById);
