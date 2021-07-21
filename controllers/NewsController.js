@@ -153,6 +153,36 @@ class NewsContoller {
         }
     }
 
+    static async updateNewsImageById(req, res) {
+        try {
+            if (!mongoose.isValidObjectId(req.params.id)) {
+                res.status(400).send(response('Invalid news id', {}, false));
+            }
+
+            const fileName = req.file.filename;
+            const basePath = `${req.protocol}://${req.get(
+                'host'
+            )}/public/uploads/`;
+            const update = {
+                image: `${basePath}${fileName}`,
+            };
+            const filter = { _id: req.params.id };
+
+            const news = await News.findOneAndUpdate(filter, update, {
+                new: true,
+            });
+
+            if (!news)
+                return res
+                    .status(500)
+                    .send(response('The news can not be updated', {}, false));
+
+            res.send(response('News was updated successfully', news));
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+
     static deleteNewsById(req, res) {
         News.findByIdAndDelete(req.params.id)
             .then((news) => {

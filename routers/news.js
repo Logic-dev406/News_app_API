@@ -8,7 +8,7 @@ const {
     getUsersNews,
     deleteNewsById,
     updateNewsById,
-    filterNewsByCategory,
+    updateNewsImageById,
 } = require('../controllers/NewsController');
 const news = require('../models/news');
 
@@ -46,8 +46,11 @@ router.get('/:slug', getNewsById);
 //Get news created by a user
 router.get('/mynews/:id', getUsersNews);
 
-//Update my news
+//Update news by id
 router.put('/:id', updateNewsById);
+
+//Update news image buy id
+router.put('/image/:id', updateNewsImageById);
 
 //Delete news by id
 router.delete('/:id', deleteNewsById);
