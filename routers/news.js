@@ -9,6 +9,7 @@ const {
     deleteNewsById,
     updateNewsById,
     updateNewsImageById,
+    getRecentNews,
 } = require('../controllers/NewsController');
 const news = require('../models/news');
 
@@ -40,6 +41,9 @@ const uploadOptions = multer({ storage: storage });
 //Get news
 router.get('/', getNews);
 
+//Get recent news
+router.get('/:count', getRecentNews);
+
 //Get news by slug
 router.get('/:slug', getNewsById);
 
@@ -49,7 +53,7 @@ router.get('/mynews/:id', getUsersNews);
 //Update news by id
 router.put('/:id', updateNewsById);
 
-//Update news image buy id
+//Update news image by id
 router.put('/image/:id', uploadOptions.single('image'), updateNewsImageById);
 
 //Delete news by id

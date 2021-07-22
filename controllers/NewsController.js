@@ -26,6 +26,19 @@ class NewsContoller {
         }
     }
 
+    static async getRecentNews(req, res) {
+        const count = req.params.count ? req.params.count : 0;
+        const news = await News.find()
+            .sort({ datePosted: 'descending' })
+            .limit(+count);
+
+        if (!news) {
+            return res.status(500).send(response('News not found', {}, false));
+        }
+
+        res.send(response('Fetched news successfully', news));
+    }
+
     static async getNewsById(req, res) {
         try {
             const news = await News.findOne({ slug: req.params.slug })
