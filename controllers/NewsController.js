@@ -7,12 +7,8 @@ class NewsContoller {
     static async getNews(req, res) {
         try {
             const count = req.params.count ? req.params.count : 0;
-            let filter = {};
-            if (req.query.categories) {
-                filter = { category: req.query.categories.split(', ') };
-            }
-            const newsList = await News.find(filter)
-                .sort({ dateOdered: -1 })
+
+            const newsList = await News.find()
                 .limit(+count)
                 .populate({ path: 'category', model: 'Category' });
 
@@ -23,6 +19,54 @@ class NewsContoller {
             }
 
             res.send(response('Featched news list successfully', newsList));
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    static async filterNewsByCategory(req, res) {
+        try {
+            if (!mongoose.isValidObjectId(req.params.id)) {
+                res.status(400).send(response('Invalid Category', {}, false));
+            }
+
+            const news = await News.find({ category: req.params.id });
+
+            if (!news) {
+                res.status(500).send(
+                    response(
+                        'News with the given category was not found',
+                        {},
+                        false
+                    )
+                );
+            }
+
+            res.status(200).send(response('Fetched news successfully', news));
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    static async searchNewsByCategory(req, res) {
+        try {
+            let filter = {};
+            if (req.query.title) {
+                filter = { category: req.query.title.split(', ') };
+            }
+            const newsList = await News.find(filter)
+                .limit(+count)
+                .populate({ path: 'category', model: 'Category' });
+
+            if (!newsList) {
+                res.status(500).send(
+                    response('Search news not available', {}, false)
+                );
+            }
+
+            res.send(
+                response('Featched searched news list successfully', newsList)
+            );
         } catch (err) {
             console.log(err);
         }
@@ -58,30 +102,6 @@ class NewsContoller {
             console.log(err);
         }
     }
-
-    // static async filterNewsByCategory(req, res) {
-    //     try {
-    //         if (!mongoose.isValidObjectId(req.params.category)) {
-    //             res.status(400).send(response('Invalid Category', {}, false));
-    //         }
-
-    //         const news = await News.find({ category: req.params.category });
-
-    //         if (!news) {
-    //             res.status(500).send(
-    //                 response(
-    //                     'News with the given category was not found',
-    //                     {},
-    //                     false
-    //                 )
-    //             );
-    //         }
-
-    //         res.status(200).send(response('Fetched news successfully', news));
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // }
 
     static async getUsersNews(req, res) {
         try {
