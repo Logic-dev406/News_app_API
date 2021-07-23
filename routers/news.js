@@ -11,7 +11,7 @@ const {
     updateNewsImageById,
     getRecentNews,
     filterNewsByCategory,
-    searchNewsByCategory,
+    searchNews,
 } = require('../controllers/NewsController');
 const news = require('../models/news');
 
@@ -47,7 +47,7 @@ router.get('/:count', getNews);
 router.get('/recentnews/:count', getRecentNews);
 
 //Search news by category
-router.get('/search', searchNewsByCategory);
+router.get('/search', searchNews);
 
 //Filter news by category
 router.get('/filterednews/:id', filterNewsByCategory);

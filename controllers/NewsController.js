@@ -48,7 +48,7 @@ class NewsContoller {
         }
     }
 
-    static async searchNewsByCategory(req, res) {
+    static async searchNews(req, res) {
         try {
             let filter = {};
             if (req.query.title) {
