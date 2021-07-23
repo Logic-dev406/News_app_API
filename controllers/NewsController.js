@@ -6,12 +6,14 @@ const mongoose = require('mongoose');
 class NewsContoller {
     static async getNews(req, res) {
         try {
+            const count = req.params.count ? req.params.count : 0;
             let filter = {};
             if (req.query.categories) {
                 filter = { category: req.query.categories.split(', ') };
             }
             const newsList = await News.find(filter)
                 .sort({ dateOdered: -1 })
+                .limit(+count)
                 .populate({ path: 'category', model: 'Category' });
 
             if (!newsList) {

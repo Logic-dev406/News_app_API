@@ -39,10 +39,10 @@ var storage = multer.diskStorage({
 const uploadOptions = multer({ storage: storage });
 
 //Get news
-router.get('/', getNews);
+router.get('/:count', getNews);
 
 //Get recent news
-router.get('/:count', getRecentNews);
+router.get('/recentnews/:count', getRecentNews);
 
 //Get news by slug
 router.get('/:slug', getNewsById);
