@@ -12,6 +12,7 @@ const {
     getRecentNews,
     filterNewsByCategory,
     searchNews,
+    getTotalCountOfNews,
 } = require('../controllers/NewsController');
 const news = require('../models/news');
 
@@ -49,6 +50,9 @@ router.get('/recentnews/:count', getRecentNews);
 //Search news by category
 router.get('/search', searchNews);
 
+// Get total news count
+router.get('/newscount', getTotalCountOfNews);
+
 //Filter news by category
 router.get('/filterednews/:id', filterNewsByCategory);
 
@@ -66,9 +70,6 @@ router.put('/image/:id', uploadOptions.single('image'), updateNewsImageById);
 
 //Delete news by id
 router.delete('/:id', deleteNewsById);
-
-//Get news by category
-// router.get('/filter/:category', filterNewsByCategory);
 
 //Create news
 router.post('/', uploadOptions.single('image'), createNews);

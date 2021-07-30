@@ -178,6 +178,18 @@ class NewsContoller {
         }
     }
 
+    static async getTotalCountOfNews(req, res) {
+        const newsCount = await News.countDocuments((count) => count);
+
+        if (!newsCount) {
+            return res
+                .status(500)
+                .send(response('News count unsuccessful', {}, false));
+        }
+
+        res.send(response('News count successful', newsCount));
+    }
+
     static async updateNewsImageById(req, res) {
         try {
             if (!mongoose.isValidObjectId(req.params.id)) {
