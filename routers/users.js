@@ -11,11 +11,15 @@ const {
     deleteUserById,
     updateUserById,
     deleteAllAccount,
+    getAllUsers,
 } = require('../controllers/UsersController');
 // const { authUser, isAdmin } = require('../helpers/jwt');
 
 //TODO
 //Integrate sendgrid email service
+
+//Get list of all users
+router.get('/', getAllUsers);
 
 //Get list of active users
 router.get('/active-users', getListOfActiveUsers);

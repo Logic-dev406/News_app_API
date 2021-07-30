@@ -9,6 +9,16 @@ const response = require('../helpers/response');
 const Wallet = require('../models/wallet');
 
 class UsersController {
+    static async getAllUsers(req, res) {
+        const userList = await User.find().select('-passwordHash ');
+
+        if (!userList) {
+            res.status(500).send(response('Users not find', {}, false));
+        }
+
+        res.send(response('Fetched users successfully', userList));
+    }
+
     static async getListOfActiveUsers(req, res) {
         const userList = await User.find({ status: 'active' }).select(
             '-passwordHash '
@@ -18,7 +28,7 @@ class UsersController {
             res.status(500).send(response('Users not find', {}, false));
         }
 
-        res.send(response('Fetched users successfully', userList));
+        res.send(response('Fetched active users successfully', userList));
     }
 
     static async getListOfNonActiveUsers(req, res) {
