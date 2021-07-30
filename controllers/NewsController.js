@@ -49,27 +49,18 @@ class NewsContoller {
     }
 
     static async searchNews(req, res) {
-        try {
-            let filter = {};
-            if (req.query.title) {
-                filter = { category: req.query.title.split(', ') };
-            }
-            const newsList = await News.find(filter)
-                .limit(+count)
-                .populate({ path: 'category', model: 'Category' });
+        const searchInput = req.query.title;
 
-            if (!newsList) {
-                res.status(500).send(
-                    response('Search news not available', {}, false)
-                );
-            }
+        const search = await News.find({
+            title: { $regex: searchInput, $options: '$i' },
+        });
 
-            res.send(
-                response('Featched searched news list successfully', newsList)
+        if (!search) {
+            res.status(500).send(
+                response('Search news not available', {}, false)
             );
-        } catch (err) {
-            console.log(err);
         }
+        res.send(response('Featched searched news list successfully', search));
     }
 
     static async getRecentNews(req, res) {
@@ -85,12 +76,11 @@ class NewsContoller {
         res.send(response('Fetched news successfully', news));
     }
 
-    static async getNewsById(req, res) {
+    static async getNewsBySlug(req, res) {
         try {
             const news = await News.findOne({ slug: req.params.slug })
                 .populate({ path: 'category', model: 'Category' })
                 .populate({ path: 'autor', model: 'User' });
-
             if (!news) {
                 res.status(500).send(
                     response('News with the given ID was not found', {}, false)

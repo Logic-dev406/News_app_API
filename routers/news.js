@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const {
     getNews,
-    getNewsById,
+    getNewsBySlug,
     createNews,
     getUsersNews,
     deleteNewsById,
@@ -41,7 +41,7 @@ var storage = multer.diskStorage({
 const uploadOptions = multer({ storage: storage });
 
 //Get news
-router.get('/:count', getNews);
+router.get('/count/:count', getNews);
 
 //Get recent news
 router.get('/recentnews/:count', getRecentNews);
@@ -53,7 +53,7 @@ router.get('/search', searchNews);
 router.get('/filterednews/:id', filterNewsByCategory);
 
 //Get news by slug
-router.get('/:slug', getNewsById);
+router.get('/:slug', getNewsBySlug);
 
 //Get news created by a user
 router.get('/mynews/:id', getUsersNews);
